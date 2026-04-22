@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wine Embassy · B2B Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f7f8;
+    --panel: rgba(255,255,255,0.78);
+    --panel-strong: rgba(255,255,255,0.95);
+    --panel-dark: #2b1a22;
+    --panel-dark-2: #1a1015;
+
+    /* darker, richer pink (closer to your reference) */
+    --rose-50: #ffe5ee;
+    --rose-100: #ffccd9;
+    --rose-200: #ff9fba;
+    --rose-300: #ff6e9f;
+    --rose-400: #f03f80;
+    --rose-500: #d81b60;
+    --rose-600: #c2185b;
+    --rose-700: #a00045;
+
+    --ink: #1a1417;
+    --ink-soft: #4f4348;
+    --ink-muted: #85767c;
+    --ink-faint: #b5a8ad;
+
+    --line: rgba(80, 40, 60, 0.14);
+    --line-strong: rgba(80, 40, 60, 0.22);
+
+    --shadow-soft: 0 12px 30px rgba(180, 80, 120, 0.12);
+    --shadow-card: 0 18px 60px rgba(200, 80, 130, 0.18);
+    --shadow-hero: 0 30px 100px rgba(200, 80, 130, 0.28);
+
+    --radius-xs: 14px;
+    --radius-sm: 20px;
+    --radius-md: 28px;
+    --radius-lg: 38px;
+
+    /* modern sans only */
+    --serif: 'Inter', sans-serif;
+    --sans: 'Inter', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background:
+      radial-gradient(circle at top left, rgba(216, 27, 96, 0.10), transparent 40%),
+      radial-gradient(circle at 85% 10%, rgba(240, 63, 128, 0.08), transparent 35%),
+      linear-gradient(180deg, #ffffff 0%, #fafafa 40%, #f5f5f6 100%);
+    color: var(--ink);
+    line-height: 1.5;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(255,255,255,0.28), rgba(255,255,255,0.28)),
+      radial-gradient(circle at 15% 20%, rgba(255,255,255,0.4), transparent 18%),
+      radial-gradient(circle at 80% 35%, rgba(255,255,255,0.3), transparent 18%);
+    opacity: .7;
+  }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255, 250, 252, 0.72);
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+    border-bottom: 1px solid rgba(112,84,108,0.08);
+  }
+  .nav-inner {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 40px; max-width: 1280px; margin: 0 auto;
+  }
+  .logo {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 23px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .logo .logo-accent {
+    color: var(--rose-700);
+    font-style: italic;
+  }
+  .nav-links {
+    display: flex; gap: 32px; align-items: center;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+  .nav-links a {
+    color: inherit; text-decoration: none;
+    position: relative; padding: 2px 0;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--rose-700); }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--rose-500), var(--rose-300));
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-actions { display: flex; gap: 16px; align-items: center; }
+  .lang {
+    font-size: 12px; color: var(--ink-muted); letter-spacing: 0.08em;
+    padding: 8px 12px; border-radius: 999px;
+    background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(112,84,108,0.08);
+  }
+  .lang .active { color: var(--ink); font-weight: 700; }
+  .btn-signin {
+    padding: 11px 20px;
+    font-family: var(--sans);
+    font-size: 13px; font-weight: 700;
+    border: 1px solid rgba(112,84,108,0.08);
+    background: linear-gradient(135deg, #2a1a26 0%, #4a2840 100%);
+    color: #fff;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(62, 31, 52, 0.18);
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  }
+  .btn-signin:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 26px rgba(62, 31, 52, 0.22);
+    opacity: 0.96;
+  }
+
+  .hero {
+    padding: 90px 40px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 24px 24px 0 24px;
+    border-radius: 42px;
+    background:
+      radial-gradient(circle at 10% 10%, rgba(255,255,255,0.96), transparent 24%),
+      radial-gradient(circle at 100% 0%, rgba(216, 27, 96, 0.18), transparent 24%),
+      linear-gradient(135deg, rgba(255,255,255,0.98), rgba(250, 250, 250, 0.96) 40%, rgba(245, 245, 246, 0.92) 100%);
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: var(--shadow-hero);
+  }
+  .hero-decor {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 20%, rgba(255,255,255,0.55) 0%, transparent 28%),
+      radial-gradient(ellipse at 85% 18%, rgba(216, 27, 96, 0.16) 0%, transparent 28%),
+      radial-gradient(ellipse at 70% 85%, rgba(240, 63, 128, 0.16) 0%, transparent 35%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 72px;
+    max-width: 1200px; margin: 0 auto;
+    position: relative; z-index: 1;
+    padding: 26px 18px 14px;
+  }
+  .hero-left { animation: fadeUp 0.9s ease-out; }
+  .hero-right { animation: fadeUp 0.9s 0.15s ease-out backwards; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rose-700); font-weight: 700;
+    margin-bottom: 24px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.52);
+    border: 1px solid rgba(232, 135, 165, 0.16);
+  }
+  .eyebrow::before {
+    content: ''; width: 22px; height: 2px;
+    background: linear-gradient(90deg, var(--rose-600), var(--rose-300));
+    border-radius: 999px;
+  }
+  h1.hero-title {
+    font-family: var(--sans);
+    font-size: clamp(46px, 5.5vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin-bottom: 24px;
+    max-width: 640px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose-700);
+    font-weight: 400;
+  }
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 530px;
+    margin-bottom: 18px;
+  }
+
+  .persona-stack {
+    display: flex; flex-direction: column; gap: 14px;
+    padding-top: 20px;
+  }
+  .persona {
+    display: grid;
+    grid-template-columns: 42px 1fr auto;
+    align-items: center;
+    gap: 18px;
+    padding: 24px 24px;
+    background: rgba(255,255,255,0.58);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.82);
+    box-shadow: var(--shadow-soft);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+    text-decoration: none;
+    color: inherit;
+  }
+  .persona:hover {
+    border-color: rgba(232, 135, 165, 0.30);
+    transform: translateX(6px) translateY(-2px);
+    background: rgba(255,255,255,0.76);
+  }
+  .persona.featured {
+    background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255, 237, 243, 0.90));
+    border-color: rgba(232, 135, 165, 0.28);
+    box-shadow: 0 20px 50px rgba(215, 141, 170, 0.18);
+  }
+  .persona-num {
+    font-family: var(--serif);
+    font-size: 28px; font-style: italic;
+    color: var(--rose-700);
+    line-height: 1;
+  }
+  .persona-label {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-muted); margin-bottom: 4px; font-weight: 700;
+  }
+  .persona.featured .persona-label { color: var(--rose-700); }
+  .persona-name {
+    font-family: var(--serif);
+    font-size: 21px; font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .persona-desc { font-size: 12.8px; color: var(--ink-muted); }
+  .persona-arrow {
+    width: 40px; height: 40px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.68);
+    border: 1px solid rgba(112,84,108,0.08);
+    font-size: 18px; color: var(--ink-muted);
+    transition: transform 0.3s, color 0.3s, background 0.3s;
+  }
+  .persona:hover .persona-arrow {
+    color: var(--rose-700);
+    transform: translateX(4px);
+    background: rgba(255,255,255,0.92);
+  }
+
+  .trust-strip {
+    padding: 28px 40px 0;
+    margin-top: 6px;
+    background: transparent;
+    color: var(--ink);
+  }
+  .trust-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 18px;
+    align-items: stretch;
+  }
+  .stat {
+    position: relative;
+    background: rgba(255,255,255,0.58);
+    border: 1px solid rgba(255,255,255,0.78);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-soft);
+    padding: 26px 24px;
+    min-height: 156px;
+  }
+  .stat + .stat::before { display: none; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 54px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .stat-num .unit {
+    font-size: 18px;
+    color: var(--rose-700);
+    margin-left: 4px;
+    font-style: italic;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rose-700);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .stat-caption {
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.55;
+  }
+
+  .section { padding: 104px 40px; }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 56px;
+    gap: 40px;
+    max-width: 1200px;
+    margin-left: auto; margin-right: auto;
+  }
+  .section-head-left { max-width: 640px; }
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rose-700); font-weight: 700;
+    margin-bottom: 18px;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 15px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.58);
+    border: 1px solid rgba(232, 135, 165, 0.12);
+  }
+  .section-eyebrow::before {
+    content: ''; width: 20px; height: 2px;
+    background: linear-gradient(90deg, var(--rose-600), var(--rose-300));
+    border-radius: 999px;
+  }
+  h2.section-title {
+    font-family: var(--sans);
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .section-title em { font-style: italic; color: var(--rose-700); }
+  .section-desc {
+    font-size: 15px; color: var(--ink-soft);
+    margin-top: 16px;
+    line-height: 1.7;
+  }
+  .section-link {
+    font-size: 13px; color: var(--ink);
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    display: inline-flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.65);
+    border: 1px solid rgba(112,84,108,0.10);
+    box-shadow: var(--shadow-soft);
+    transition: gap 0.2s, transform 0.2s;
+  }
+  .section-link:hover { gap: 14px; transform: translateY(-1px); }
+
+  .collections {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .collection-card {
+    aspect-ratio: 1.08;
+    padding: 28px;
+    border-radius: var(--radius-md);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.35s;
+    border: 1px solid rgba(255,255,255,0.58);
+    box-shadow: var(--shadow-card);
+  }
+  .collection-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.38), transparent 28%);
+    pointer-events: none;
+  }
+  .collection-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.18) 100%);
+    opacity: 0; transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .collection-card:hover { transform: translateY(-6px); box-shadow: 0 24px 70px rgba(0,0,0,0.08); }
+  .collection-card:hover::after { opacity: 1; }
+
+  .col-tag {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    font-weight: 700;
+    opacity: 0.78;
+  }
+  .col-name {
+    font-family: var(--sans);
+    font-size: 28px;
+    line-height: 1.1;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .col-name em { font-style: italic; font-weight: 400; }
+  .col-desc {
+    font-size: 13px;
+    opacity: 0.82;
+    line-height: 1.6;
+    max-width: 280px;
+  }
+  .col-arrow {
+    position: absolute; bottom: 24px; right: 24px;
+    width: 40px; height: 40px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.56; transition: opacity 0.3s, transform 0.3s;
+    background: rgba(255,255,255,0.18);
+  }
+  .collection-card:hover .col-arrow {
+    opacity: 1;
+    transform: rotate(-45deg);
+  }
+
+  .col-12emezzo { background: linear-gradient(135deg, #fff6f9, #ffb7cb 100%); color: #4b2333; }
+  .col-gosset { background: linear-gradient(135deg, #ffeaf1, #ff9fba 100%); color: #3e1f2b; }
+  .col-kaiser { background: linear-gradient(135deg, #ffdbe6, #ff7ea5 100%); color: #3d1c29; }
+  .col-terra { background: linear-gradient(135deg, #fff1f5, #ffb0c7 100%); color: #4a2634; }
+  .col-licensed { background: linear-gradient(135deg, #ffe1eb, #ff8fb0 100%); color: #3f1d2a; }
+  .col-finerare { background: linear-gradient(135deg, #fff0f5, #ffabc2 100%); color: #43202e; }
+
+  .portfolio-section {
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.38), rgba(255,255,255,0.12));
+  }
+
+  .search-bar {
+    max-width: 1200px; margin: 0 auto 24px;
+    display: flex; gap: 12px; align-items: center;
+  }
+  .search-input {
+    flex: 1;
+    padding: 19px 24px;
+    background: rgba(255,255,255,0.74);
+    border: 1px solid rgba(255,255,255,0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-soft);
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-input:focus {
+    border-color: rgba(232, 135, 165, 0.32);
+    box-shadow: 0 0 0 4px rgba(232, 135, 165, 0.10), var(--shadow-soft);
+  }
+  .search-input::placeholder { color: var(--ink-muted); }
+  .btn-filter {
+    padding: 18px 28px;
+    background: linear-gradient(135deg, #2a1a26 0%, #4a2840 100%);
+    color: #fff;
+    border: none;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    box-shadow: 0 14px 28px rgba(62, 31, 52, 0.18);
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .btn-filter:hover { transform: translateY(-1px); opacity: 0.96; }
+
+  .chips {
+    max-width: 1200px; margin: 0 auto 36px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .chip {
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.52);
+    border: 1px solid rgba(255,255,255,0.85);
+    box-shadow: var(--shadow-soft);
+    border-radius: 999px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .chip:hover {
+    background: linear-gradient(135deg, #fff, #ffd6e3);
+    color: var(--ink);
+    border-color: rgba(216, 27, 96, 0.20);
+    transform: translateY(-1px);
+  }
+
+  .wine-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .wine-card {
+    background: rgba(255,255,255,0.70);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.82);
+    box-shadow: var(--shadow-card);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  .wine-card:hover {
+    border-color: rgba(216, 27, 96, 0.18);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.08);
+  }
+  }
+  .wine-bottle {
+    aspect-ratio: 0.72;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(255,255,255,0.96), transparent 24%),
+      linear-gradient(180deg, #fffefe 0%, #ffd9e4 100%);
+    border-radius: 24px;
+    position: relative;
+    margin-bottom: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.82);
+  }
+  .wine-bottle::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,0.55) 0%, transparent 20%, transparent 80%, rgba(216, 27, 96, 0.14) 100%),
+      radial-gradient(circle at 85% 85%, rgba(240, 63, 128, 0.24), transparent 18%);
+  }
+  .score-badge {
+    position: absolute; bottom: 12px; left: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: white;
+    font-family: var(--sans);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.10);
+  }
+  .score-we { background: linear-gradient(135deg, #6f3b56, #a05378); }
+  .score-js { background: linear-gradient(135deg, #7a4364, #bf6f93); }
+  .score-gold { background: linear-gradient(135deg, #d28aaa, #efb1c8); }
+  .score-tp { background: linear-gradient(135deg, #694257, #9a6881); }
+
+  .wine-origin {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rose-700);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .wine-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.24;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 12px;
+    min-height: 46px;
+    letter-spacing: -0.01em;
+  }
+  .wine-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 14px;
+    border-top: 1px solid rgba(112,84,108,0.08);
+    margin-top: auto;
+  }
+  .wine-price {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .wine-price small {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: var(--ink-muted);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-left: 4px;
+  }
+  .wholesale-hint {
+    font-size: 10.5px;
+    color: var(--rose-700);
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .services {
+    background:
+      radial-gradient(circle at 12% 10%, rgba(255,255,255,0.12), transparent 22%),
+      linear-gradient(180deg, #352430 0%, #241823 100%);
+    color: #fff;
+    padding: 108px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .services::before {
+    content: '';
+    position: absolute;
+    top: -10%; right: -5%;
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(255, 195, 217, 0.16) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .services .section-title { color: #fff; }
+  .services .section-title em { color: #ffc9dc; }
+  .services .section-eyebrow {
+    color: #ffd3e1;
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.08);
+  }
+  .services .section-eyebrow::before { background: linear-gradient(90deg, #ffc6da, #f3a9c3); }
+  .services .section-desc { color: rgba(255, 245, 249, 0.72); }
+  .services-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    position: relative; z-index: 1;
+  }
+  .service-card {
+    padding: 28px 24px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.3s, border-color 0.3s, background 0.3s;
+  }
+  .service-card:hover {
+    border-color: rgba(255, 202, 222, 0.24);
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.06);
+  }
+  .service-num {
+    font-family: var(--serif);
+    font-size: 13px;
+    font-style: italic;
+    color: #ffd3e1;
+    margin-bottom: 12px;
+    letter-spacing: 0.08em;
+  }
+  .service-name {
+    font-family: var(--sans);
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .service-desc {
+    font-size: 13.5px;
+    color: rgba(255, 245, 249, 0.72);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .service-proof {
+    font-size: 11px;
+    color: #ffc1d7;
+    letter-spacing: 0.05em;
+    font-style: italic;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.10);
+  }
+
+  .partners {
+    padding: 70px 40px;
+    border-bottom: 1px solid rgba(112,84,108,0.08);
+  }
+  .partners-inner {
+    max-width: 1200px; margin: 0 auto;
+    text-align: center;
+    padding: 34px 28px;
+    border-radius: var(--radius-lg);
+    background: rgba(255,255,255,0.56);
+    border: 1px solid rgba(255,255,255,0.86);
+    box-shadow: var(--shadow-soft);
+  }
+  .partners-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 32px;
+  }
+  .partners-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .partner-logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    opacity: 0.42;
+    transition: opacity 0.3s, transform 0.3s;
+    font-style: italic;
+  }
+  .partner-logo:hover { opacity: 1; transform: translateY(-1px); }
+
+  .footer {
+    background: transparent;
+    padding: 88px 40px 40px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 60px;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    background: rgba(255,255,255,0.64);
+    border: 1px solid rgba(255,255,255,0.86);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .foot-brand {
+    font-family: var(--serif);
+    font-size: 30px;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .foot-brand em { color: var(--rose-700); font-style: italic; }
+  .foot-tagline {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.7;
+    max-width: 320px;
+    margin-bottom: 24px;
+  }
+  .foot-head {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rose-700);
+    margin-bottom: 18px;
+    font-weight: 700;
+  }
+  .foot-body { font-size: 13px; color: var(--ink-soft); line-height: 1.9; }
+  .foot-body a { color: inherit; text-decoration: none; transition: color 0.2s; }
+  .foot-body a:hover { color: var(--rose-700); }
+  .newsletter-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.74);
+    border: 1px solid rgba(255,255,255,0.82);
+    box-shadow: var(--shadow-soft);
+    border-radius: 16px;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    margin-bottom: 10px;
+  }
+  .newsletter-input:focus {
+    border-color: rgba(232, 135, 165, 0.32);
+    box-shadow: 0 0 0 4px rgba(232, 135, 165, 0.10), var(--shadow-soft);
+  }
+  .newsletter-note { font-size: 11.5px; color: var(--ink-muted); line-height: 1.55; }
+
+  .foot-bottom {
+    max-width: 1200px; margin: 28px auto 0;
+    padding: 0 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+  }
+  .foot-bottom-links { display: flex; gap: 24px; }
+  .foot-bottom-links a { color: inherit; text-decoration: none; }
+  .foot-bottom-links a:hover { color: var(--rose-700); }
+
+  @media (max-width: 960px) {
+    .container, .nav-inner, .trust-inner, .section-head,
+    .collections, .search-bar, .chips, .wine-grid,
+    .services-grid, .partners-inner, .footer-inner { padding-left: 24px; padding-right: 24px; }
+    .hero { padding: 60px 24px; }
+    .hero::before { inset: 10px 10px 0 10px; border-radius: 30px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .trust-inner { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .section { padding: 76px 0; }
+    .collections { grid-template-columns: repeat(2, 1fr); }
+    .wine-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 580px) {
+    .nav-inner { padding: 14px 20px; }
+    .collections { grid-template-columns: 1fr; }
+    .wine-grid { grid-template-columns: 1fr 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .foot-bottom { flex-direction: column; gap: 16px; }
+    .section-link, .btn-filter, .search-input, .btn-signin { border-radius: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo">Wine <em class="logo-accent">Embassy</em></div>
+    <div class="nav-links">
+      <a href="#portfolio">Portfolio</a>
+      <a href="#collections">Collections</a>
+      <a href="#services">Services</a>
+      <a href="#">Stories</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <span class="lang"><span class="active">VI</span> · EN</span>
+      <button class="btn-signin">Sign in</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-decor"></div>
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="eyebrow">Nhà nhập khẩu &amp; phân phối rượu vang · từ 2012</div>
+      <h1 class="hero-title">Making wine a part of your <em>lifestyle</em></h1>
+      <p class="hero-sub">243 SKU chọn lọc từ 12 quốc gia. Tư vấn wine list cho HORECA, cung cấp đối tác retail, thiết kế corporate gifting — một đối tác duy nhất cho toàn bộ nhu cầu rượu vang của bạn.</p>
+    </div>
+    <div class="hero-right">
+      <div class="persona-stack">
+        <a href="#" class="persona featured">
+          <span class="persona-num">I.</span>
+          <div class="persona-body">
+            <div class="persona-label">Dành cho bạn</div>
+            <div class="persona-name">HORECA</div>
+            <div class="persona-desc">Nhà hàng, khách sạn, wine bar — xem sample menu &amp; tư vấn wine list</div>
+          </div>
+          <span class="persona-arrow">→</span>
+        </a>
+        <a href="#" class="persona">
+          <span class="persona-num">II.</span>
+          <div class="persona-body">
+            <div class="persona-label">Hoặc</div>
+            <div class="persona-name">Retailer</div>
+            <div class="persona-desc">Shop rượu, siêu thị — MOQ, margin, fast-mover list</div>
+          </div>
+          <span class="persona-arrow">→</span>
+        </a>
+        <a href="#" class="persona">
+          <span class="persona-num">III.</span>
+          <div class="persona-body">
+            <div class="persona-label">Hoặc</div>
+            <div class="persona-name">Corporate &amp; Event</div>
+            <div class="persona-desc">Gift set, wine dinner, private labelling — LotR &amp; Peaky collections</div>
+          </div>
+          <span class="persona-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust-strip">
+  <div class="trust-inner">
+    <div class="stat">
+      <div class="stat-num">243</div>
+      <div class="stat-label">SKU</div>
+      <div class="stat-caption">Đỏ · trắng · sủi · hồng · ngọt</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Quốc gia</div>
+      <div class="stat-caption">Pháp, Ý, TBN dẫn đầu</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">106</div>
+      <div class="stat-label">Wines 90+</div>
+      <div class="stat-caption">Thẩm định bên thứ ba độc lập</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">25</div>
+      <div class="stat-label">Gold medal</div>
+      <div class="stat-caption">Gilbert &amp; Gaillard, Sakura, Mundus Vini</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">14<span class="unit">năm</span></div>
+      <div class="stat-label">Hoạt động</div>
+      <div class="stat-caption">Thành lập 2012 tại TP.HCM</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="collections">
+  <div class="section-head">
+    <div class="section-head-left">
+      <div class="section-eyebrow">Collections</div>
+      <h2 class="section-title">Mỗi bộ sưu tập, một <em>câu chuyện</em></h2>
+      <p class="section-desc">Từ vang Ý La Dolce Vita đến Champagne lâu đời từ 1584, từ private label concept đến Bordeaux cho nhà sưu tầm.</p>
+    </div>
+    <a href="#" class="section-link">Xem tất cả →</a>
+  </div>
+
+  <div class="collections">
+    <a href="#" class="collection-card col-12emezzo">
+      <div class="col-tag">Daily · Puglia · Ý</div>
+      <div class="col-body">
+        <div class="col-name"><em>12</em> E Mezzo</div>
+        <div class="col-desc">La Dolce Vita · Primitivo &amp; Negroamaro 12.5% · 590K – 980K</div>
+      </div>
+      <span class="col-arrow">→</span>
+    </a>
+    <a href="#" class="collection-card col-gosset">
+      <div class="col-tag">Flagship Champagne · Pháp</div>
+      <div class="col-body">
+        <div class="col-name">Gosset</div>
+        <div class="col-desc">Nhà Champagne lâu đời nhất vùng Aÿ, từ 1584 · 7 cuvée</div>
+      </div>
+      <span class="col-arrow">→</span>
+    </a>
+    <a href="#" class="collection-card col-kaiser">
+      <div class="col-tag">Concept · Nier Fine Wines</div>
+      <div class="col-body">
+        <div class="col-name">Des Kaiser<br>Neue Kleider</div>
+        <div class="col-desc">Áo hoàng gia · thiết kế nhãn chai độc đáo · gifting</div>
+      </div>
+      <span class="col-arrow">→</span>
+    </a>
+    <a href="#" class="collection-card col-terra">
+      <div class="col-tag">Traditional · Puglia</div>
+      <div class="col-body">
+        <div class="col-name">Terra <em>/</em> Classic</div>
+        <div class="col-desc">Primitivo, Negroamaro, Susumaniello · phức hợp hơn</div>
+      </div>
+      <span class="col-arrow">→</span>
+    </a>
+    <a href="#" class="collection-card col-licensed">
+      <div class="col-tag">Licensed · Private label</div>
+      <div class="col-body">
+        <div class="col-name">LotR <em>·</em> Peaky</div>
+        <div class="col-desc">Lord of the Rings™ &amp; Peaky Blinders — corporate gift premium</div>
+      </div>
+      <span class="col-arrow">→</span>
+    </a>
+    <a href="#" class="collection-card col-finerare">
+      <div class="col-tag">Collector · Fine &amp; Rare</div>
+      <div class="col-body">
+        <div class="col-name">Fine <em>&amp;</em> Rare</div>
+        <div class="col-desc">Bordeaux Grand Cru 1957, Burgundy · đầu tư &amp; sưu tầm</div>
+      </div>
+      <span class="col-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<section class="section portfolio-section" id="portfolio">
+  <div class="section-head">
+    <div class="section-head-left">
+      <div class="section-eyebrow">Portfolio Explorer</div>
+      <h2 class="section-title">Tìm rượu phù hợp <em>menu</em> của bạn</h2>
+      <p class="section-desc">Lọc 243 SKU theo ngân sách, style, vùng trồng, giống nho, và điểm thẩm định. Compare tối đa 4 chai side-by-side.</p>
+    </div>
+    <a href="#" class="section-link">Mở Portfolio Explorer →</a>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" class="search-input" placeholder="Tìm theo tên wine, giống nho, nhà vang, hoặc vùng…">
+    <button class="btn-filter">Lọc nâng cao</button>
+  </div>
+
+  <div class="chips">
+    <span class="chip">Vang đỏ Pháp dưới 1M</span>
+    <span class="chip">Champagne 90+ điểm</span>
+    <span class="chip">Primitivo Puglia</span>
+    <span class="chip">Vang trắng tươi mát</span>
+    <span class="chip">Gold medal</span>
+    <span class="chip">Organic &amp; biodynamic</span>
+  </div>
+
+  <div class="wine-grid">
+    <div class="wine-card">
+      <div class="wine-bottle">
+        <span class="score-badge score-we">94 · WE</span>
+      </div>
+      <div class="wine-origin">Pháp · Languedoc</div>
+      <div class="wine-name">Les Jamelles<br>Pinot Noir</div>
+      <div class="wine-price-row">
+        <div class="wine-price">790K <small>retail</small></div>
+        <a href="#" class="wholesale-hint">wholesale →</a>
+      </div>
+    </div>
+    <div class="wine-card">
+      <div class="wine-bottle">
+        <span class="score-badge score-gold">GOLD · GG</span>
+      </div>
+      <div class="wine-origin">Pháp · Bordeaux</div>
+      <div class="wine-name">Lagrugère<br>L'Essentiel Organic</div>
+      <div class="wine-price-row">
+        <div class="wine-price">780K <small>retail</small></div>
+        <a href="#" class="wholesale-hint">wholesale →</a>
+      </div>
+    </div>
+    <div class="wine-card">
+      <div class="wine-bottle">
+        <span class="score-badge score-we">95 · WE</span>
+      </div>
+      <div class="wine-origin">Pháp · Rhône</div>
+      <div class="wine-name">Domaine Pères<br>Châteauneuf-du-Pape</div>
+      <div class="wine-price-row">
+        <div class="wine-price">2.83M <small>retail</small></div>
+        <a href="#" class="wholesale-hint">wholesale →</a>
+      </div>
+    </div>
+    <div class="wine-card">
+      <div class="wine-bottle">
+        <span class="score-badge score-js">96 · JS</span>
+      </div>
+      <div class="wine-origin">Pháp · Champagne · Aÿ</div>
+      <div class="wine-name">Gosset Celebris<br>Extra Brut 2012</div>
+      <div class="wine-price-row">
+        <div class="wine-price">11.5M <small>retail</small></div>
+        <a href="#" class="wholesale-hint">wholesale →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="section-head">
+    <div class="section-head-left">
+      <div class="section-eyebrow">Services &amp; Solutions</div>
+      <h2 class="section-title">Không chỉ bán rượu —<br>chúng tôi giúp bạn <em>bán rượu</em></h2>
+      <p class="section-desc">Service layer dành riêng cho F&amp;B partner và key account. Không phải vendor, mà là đối tác chiến lược.</p>
+    </div>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">I.</div>
+      <div class="service-name">Wine menu engineering</div>
+      <div class="service-desc">Tư vấn wine list theo concept nhà hàng, ngân sách, và pairing với cuisine. Recommend 15–40 SKU cân bằng between bestseller và signature.</div>
+      <div class="service-proof">Đã triển khai cho Sofitel, Park Hyatt, Le Corto</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">II.</div>
+      <div class="service-name">Sommelier training</div>
+      <div class="service-desc">Đào tạo F&amp;B staff về tasting, pairing, storytelling. Miễn phí cho key account — nâng cấp năng lực sale wine của đội ngũ.</div>
+      <div class="service-proof">4–6 session / tháng tại 3 showroom</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">III.</div>
+      <div class="service-name">Private labelling</div>
+      <div class="service-desc">Thiết kế bộ sưu tập riêng với nhãn chai custom. Từ gift set doanh nghiệp đến signature wine cho chuỗi khách sạn.</div>
+      <div class="service-proof">Case: Lord of the Rings™ · Peaky Blinders</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">IV.</div>
+      <div class="service-name">Events &amp; wine dinner</div>
+      <div class="service-desc">Co-host tasting event, sponsorship wine dinner, private allocation cho khách VIP. Hỗ trợ chuyên gia và logistics trọn gói.</div>
+      <div class="service-proof">20+ events / năm trên toàn quốc</div>
+    </div>
+  </div>
+</section>
+
+<section class="partners">
+  <div class="partners-inner">
+    <div class="partners-eyebrow">— Đồng hành cùng các nhà hàng &amp; khách sạn hàng đầu —</div>
+    <div class="partners-row">
+      <span class="partner-logo">Sofitel</span>
+      <span class="partner-logo">Park Hyatt</span>
+      <span class="partner-logo">Caravelle</span>
+      <span class="partner-logo">Le Corto</span>
+      <span class="partner-logo">Anan Saigon</span>
+      <span class="partner-logo">Pullman</span>
+      <span class="partner-logo">InterContinental</span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="foot-brand">Wine <em>Embassy</em></div>
+      <div class="foot-tagline">Nhà nhập khẩu &amp; phân phối rượu vang chuyên sâu tại Việt Nam. Making wine a part of your lifestyle — từ 2012.</div>
+      <div class="foot-head">Liên hệ</div>
+      <div class="foot-body">
+        <a href="tel:02836363931">(028) 3636 3931</a><br>
+        <a href="mailto:partner@wineembassy.com.vn">partner@wineembassy.com.vn</a>
+      </div>
+    </div>
+    <div>
+      <div class="foot-head">3 showroom</div>
+      <div class="foot-body">
+        14B9 Thảo Điền<br>Thủ Đức, HCMC<br><br>
+        52 Riverview 4<br>Sài Gòn, HCMC<br><br>
+        100 Hai Bà Trưng<br>Cửa Nam, Hà Nội
+      </div>
+    </div>
+    <div>
+      <div class="foot-head">Khám phá</div>
+      <div class="foot-body">
+        <a href="#">Portfolio Explorer</a><br>
+        <a href="#">Collections</a><br>
+        <a href="#">Services</a><br>
+        <a href="#">Stories &amp; Journal</a><br>
+        <a href="#">About us</a><br>
+        <a href="#">Trở thành đối tác</a>
+      </div>
+    </div>
+    <div>
+      <div class="foot-head">Newsletter</div>
+      <div class="foot-body" style="margin-bottom: 16px;">Nhận lịch vintage release, invitation tasting event, và early-access các dòng allocation hiếm.</div>
+      <input type="email" class="newsletter-input" placeholder="Email công việc">
+      <div class="newsletter-note">Chỉ gửi 2 email / tháng · hủy bất cứ lúc nào</div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div>© 2026 Wine Embassy. Thương hiệu của Vier Fine Wines.</div>
+    <div class="foot-bottom-links">
+      <a href="#">Chính sách bảo mật</a>
+      <a href="#">Điều khoản</a>
+      <a href="#">Cookie</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
